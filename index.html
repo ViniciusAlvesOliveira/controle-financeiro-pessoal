@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#11151c">
+  <meta name="description" content="Organize suas receitas, despesas e acompanhe sua vida financeira.">
+  <title>Controle Financeiro Pessoal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="Controle Financeiro, início">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span class="brand-name">controle<span>+</span></span>
+      </a>
+
+      <p class="nav-caption">MENU</p>
+      <nav class="main-nav">
+        <a class="nav-link active" href="#inicio"><span aria-hidden="true">▦</span> Visão geral</a>
+        <a class="nav-link" href="#historico"><span aria-hidden="true">↕</span> Movimentações</a>
+        <a class="nav-link" href="#relatorios"><span aria-hidden="true">◷</span> Relatórios</a>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="note-icon" aria-hidden="true">✦</span>
+        <strong>Suas finanças, no controle.</strong>
+        <p>Pequenos passos fazem uma grande diferença.</p>
+      </div>
+      <p class="sidebar-footer">SEUS DADOS FICAM NESTE DISPOSITIVO</p>
+    </aside>
+
+    <main class="main-content" id="inicio">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SEU ESPAÇO FINANCEIRO</p>
+          <h1>Visão geral</h1>
+        </div>
+        <button class="button button-primary" id="open-form" type="button">
+          <span aria-hidden="true">＋</span> Nova movimentação
+        </button>
+      </header>
+
+      <section class="welcome-row" aria-label="Resumo">
+        <div>
+          <h2>Olá! 👋</h2>
+          <p>Acompanhe sua vida financeira de um jeito simples.</p>
+        </div>
+        <p class="today-label" id="today-label"></p>
+      </section>
+
+      <section class="summary-grid" aria-label="Resumo financeiro">
+        <article class="summary-card balance-card">
+          <div class="card-heading"><span>Saldo disponível</span><span class="summary-icon blue-icon" aria-hidden="true">⌁</span></div>
+          <p class="summary-value" id="balance-value">R$ 0,00</p>
+          <p class="card-caption">Seu saldo considerando todas as movimentações</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-heading"><span>Receitas</span><span class="summary-icon green-icon" aria-hidden="true">↗</span></div>
+          <p class="summary-value" id="income-value">R$ 0,00</p>
+          <p class="card-caption">Total de entradas registradas</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-heading"><span>Despesas</span><span class="summary-icon red-icon" aria-hidden="true">↘</span></div>
+          <p class="summary-value" id="expense-value">R$ 0,00</p>
+          <p class="card-caption">Total de saídas registradas</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-heading"><span>Movimentações</span><span class="summary-icon purple-icon" aria-hidden="true">≡</span></div>
+          <p class="summary-value" id="count-value">0</p>
+          <p class="card-caption">Registros no seu histórico</p>
+        </article>
+      </section>
+
+      <section class="charts-grid" id="relatorios" aria-label="Relatórios financeiros">
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <div><h2>Receitas e despesas</h2><p>Comparativo dos últimos meses</p></div>
+            <span class="chart-badge" aria-hidden="true">▥</span>
+          </div>
+          <div class="chart-legend">
+            <span><i class="legend-dot income-dot"></i> Receitas</span>
+            <span><i class="legend-dot expense-dot"></i> Despesas</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="monthly-chart" role="img" aria-label="Gráfico de receitas e despesas por mês"></canvas>
+          </div>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <div><h2>Despesas por categoria</h2><p>Distribuição das suas saídas</p></div>
+            <span class="chart-badge green-badge" aria-hidden="true">◉</span>
+          </div>
+          <div class="category-chart-layout">
+            <div class="category-canvas-wrap">
+              <canvas id="category-chart" role="img" aria-label="Gráfico de despesas por categoria"></canvas>
+            </div>
+            <div id="category-legend" class="category-legend" aria-live="polite"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel history-panel" id="historico">
+        <div class="history-heading">
+          <div><h2>Movimentações recentes</h2><p>Consulte e organize seus registros</p></div>
+          <span class="record-count" id="record-count">0 registros</span>
+        </div>
+        <div class="filters" aria-label="Filtros do histórico">
+          <label class="filter-field month-filter">
+            <span class="sr-only">Filtrar por mês</span>
+            <select id="month-filter" aria-label="Filtrar por mês">
+              <option value="all">Todos os meses</option>
+            </select>
+          </label>
+          <label class="filter-field type-filter">
+            <span class="sr-only">Filtrar por tipo</span>
+            <select id="type-filter" aria-label="Filtrar por tipo">
+              <option value="all">Todos os tipos</option>
+              <option value="income">Receitas</option>
+              <option value="expense">Despesas</option>
+            </select>
+          </label>
+          <label class="filter-field search-filter">
+            <span class="sr-only">Pesquisar descrição</span>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="search-filter" type="search" placeholder="Buscar descrição..." autocomplete="off">
+          </label>
+          <button class="button button-quiet" id="clear-filters" type="button">Limpar filtros</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col">DESCRIÇÃO</th><th scope="col">CATEGORIA</th><th scope="col">DATA</th><th scope="col">TIPO</th><th scope="col">VALOR</th><th scope="col"><span class="sr-only">Ações</span></th></tr>
+            </thead>
+            <tbody id="transaction-list"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-icon" aria-hidden="true">▤</span>
+            <strong id="empty-title">Nenhuma movimentação por aqui</strong>
+            <p id="empty-message">Adicione sua primeira receita ou despesa para começar.</p>
+            <button class="button button-secondary" id="empty-add" type="button">Adicionar movimentação</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="page-footer">Feito para ajudar você a cuidar melhor do seu dinheiro.</footer>
+    </main>
+  </div>
+
+  <dialog class="transaction-dialog" id="transaction-dialog" aria-labelledby="dialog-title" aria-describedby="form-intro">
+    <form id="transaction-form" novalidate>
+      <div class="dialog-heading">
+        <div><p class="eyebrow">NOVO REGISTRO</p><h2 id="dialog-title">Adicionar movimentação</h2></div>
+        <button class="icon-button" id="close-form" type="button" aria-label="Fechar formulário">×</button>
+      </div>
+      <p class="form-intro" id="form-intro">Preencha os dados da sua movimentação.</p>
+      <div class="form-grid">
+        <label class="form-field full-field">Descrição
+          <input id="description" name="description" type="text" maxlength="80" placeholder="Ex.: Conta de energia" required>
+        </label>
+        <label class="form-field">Tipo
+          <select id="transaction-type" name="type" required>
+            <option value="income">Receita</option>
+            <option value="expense">Despesa</option>
+          </select>
+        </label>
+        <label class="form-field">Valor
+          <span class="currency-input"><span>R$</span><input id="amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0,00" required></span>
+        </label>
+        <label class="form-field">Categoria
+          <input id="category" name="category" type="text" maxlength="40" placeholder="Ex.: Moradia" required>
+        </label>
+        <label class="form-field">Data
+          <input id="transaction-date" name="date" type="date" required>
+        </label>
+      </div>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button class="button button-quiet" id="cancel-form" type="button">Cancelar</button>
+        <button class="button button-primary" type="submit">Salvar movimentação</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+</body>
+</html>
